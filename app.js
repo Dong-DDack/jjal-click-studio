@@ -98,7 +98,7 @@ for(const id of ['shadowColor','shadowOpacity','shadowBlur','shadowDistance'])$(
 function paintTextLine(t,line,x,y){ctx.fillText(line,x,y);if(!line||!t.underline&&!t.strike)return;const width=ctx.measureText(line).width,left=x-(t.align==='center'?width/2:t.align==='right'?width:0);ctx.save();ctx.strokeStyle=t.color;ctx.lineWidth=Math.max(1,t.size/22);for(const offset of [t.underline?t.size*.42:null,t.strike?-t.size*.05:null]){if(offset===null)continue;ctx.beginPath();ctx.moveTo(left,y+offset);ctx.lineTo(left+width,y+offset);ctx.stroke()}ctx.restore()}
 
 function typographyShortcut(e){
- const sizeDelta=(e.code==='Equal'||e.code==='NumpadAdd'||e.key==='+')?2:(e.code==='Minus'||e.code==='NumpadSubtract'||e.key==='-')?-2:0;
+ const sizeDelta=e.code==='NumpadAdd'?2:e.code==='NumpadSubtract'?-2:0;
  const t=current(),commands={KeyB:['weight',(t?.weight??700)>=700?400:700],KeyI:['italic',!t?.italic],KeyU:['underline',!t?.underline],KeyL:['align','left'],KeyE:['align','center'],KeyR:['align','right']};
  if(!(e.ctrlKey||e.metaKey)||e.altKey||(e.shiftKey&&!sizeDelta)||(!sizeDelta&&!commands[e.code])||!t||t.kind==='sticker'||isTextComposing(e))return false;
  const active=document.activeElement;
